@@ -1,0 +1,9 @@
+@import url(Base/Base.css);
+
+/* Demo CSS: */
+
+
+/* For the Menu that only shows siblings and parent */
+.ShowOnlyParentAndSiblings li{display:none;}
+.ShowOnlyParentAndSiblings li.Active{display:list-item;}
+.ShowOnlyParentAndSiblings li.Active > ul > li{display:list-item;}

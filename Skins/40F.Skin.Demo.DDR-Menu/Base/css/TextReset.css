@@ -1,0 +1,38 @@
+/*		DEFAULT STYLE		*/
+
+/* Text */
+body{color:#222; font-family:inherit; font-size:13px;}
+body,th,td,table,h1,h2,h3,h4,h5,h6,.Normal,.NormalDisabled, .Head, .SubHead, .SubSubHead, a:link, a:visited, a:hover, input, .CommandButton{color:inherit; font-family:inherit;}
+body,th,td,table,.Normal, .NormalBold, .NormalRed, .NormalDisabled,.Head,.SubHead,.SubSubHead, a:link, a:visited, a:hover{font-size:inherit;}
+h1, h2, h3, h4, h5, h6{margin:1em 0; font-weight:normal;}
+h1{font-size:150%;}
+h2{font-size:140%;}
+h3{font-size:130%;}
+h4{font-size:120%;}
+h5{font-size:110%;}
+h6{font-size:100%;}
+
+h1 a:link, h2 a:link, h3 a:link, h4 a:link, h5 a:link, h6 a:link,
+h1 a:visited, h2 a:visited, h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited{font-size:inherit;}
+
+/* Links */
+a,a:link,a:visited,a:active, a.CommandButton:link, a.CommandButton:visited{color:#b00; text-decoration:none; font-weight:normal; }
+a:hover{color:#E00}
+
+/* DNN Heading */
+.Head{color:#444; font-weight:bold;font-size:150%;}
+.SubHead {color:#666; font-size:120%;}
+.SubSubHead{color:#888; font-size:100%;}
+.NormalRed {color:#E00; }
+
+/* Tables */
+tfoot, thead, th{font-size:inherit;}
+
+/* Normal */
+.Normal p{margin-top:0px;}
+
+/* Lists */
+ul li{list-style-type:disc;}
+ul ul li{list-style-type:circle;}
+ul ul ul li{list-style-type:disc;}
+

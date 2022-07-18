@@ -1,0 +1,14 @@
+/* DNN7 > Reset */
+.dnnCPHeader li{line-height:normal;}
+#dnnCPWrap .dnnCPHNav, #dnnCPWrap .dnnCPHMode{height:30px;}
+#RibbonBar_adminMenus > ul > li > a, #dnn_cp_RibbonBar_adminMenus > ul > li > a {padding: 10px 16px;}
+.dnnCPHMessage{line-height:35px;}
+#RibbonBar_adminMenus .dnnadminmega .megaborder, #dnn_cp_RibbonBar_adminMenus .dnnadminmega .megaborder {top: 35px;}
+.LoginPanel{width:auto;}
+a.dnnPrimaryAction:link, a.dnnPrimaryAction:visited{color:#fff;}
+
+body, h1, h2, h3, h4, h5, h6, li, ul, .Normal, .NormalDisabled, .NormalDeleted, .blockquote, .blockquote p, li p{letter-spacing:normal; line-height:normal; }
+#Skin form .actionMenu ul{z-index:auto;}
+
+/* DNN7 Control panel */
+body > form #ControlBar_ControlPanel {z-index: 100001 !important;}

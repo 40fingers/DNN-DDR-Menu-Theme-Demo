@@ -1,0 +1,8 @@
+.BreadCrumbs li{display:none;}
+.BreadCrumbs li.Active, .BreadCrumbs li.Parent{display:inline-block;}
+.BreadCrumbs ul{display:inline-block; margin:0; padding:0;}
+.BreadCrumbs li.Active.Parent > ul:before{content:" > "}
+
+.BreadCrumbSpan .Item:last-child > a{color:#444;}
+.BreadCrumbSpan span a:after{content: " > ";}
+.BreadCrumbSpan span:last-child a:after{content:""; color:#222;}
