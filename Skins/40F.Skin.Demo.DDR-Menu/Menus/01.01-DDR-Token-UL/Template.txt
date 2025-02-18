@@ -1,0 +1,18 @@
+<ul>
+	[*>NODE]
+</ul>
+
+[>NODE]
+	<li class="[?FIRST]first[/?][?LAST] last[/?][?SELECTED] Active[/?]">
+		[?ENABLED]
+			<a href="[=URL]" target="[=TARGET]">[?LARGEIMAGE]<img src="[=LARGEIMAGE]" alt="[=TITLE]" />[?ELSE][?ICON]<img src="[=ICON]" alt="[=TITLE]" />[/?][/?][=TEXT]</a>
+		[?ELSE]
+			[=TEXT]
+		[/?]
+		[?NODE]
+			<ul>
+				[*>NODE]
+			</ul>
+		[/?]
+	</li>
+[/>]
