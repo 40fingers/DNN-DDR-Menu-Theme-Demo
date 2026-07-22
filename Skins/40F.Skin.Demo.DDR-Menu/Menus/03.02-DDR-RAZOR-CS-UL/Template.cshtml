@@ -32,6 +32,10 @@ var root = Model.Source.root;
 				if (node.Last) { cssClasses.Add("last"); }
 
 				if (node.Selected) { cssClasses.Add("selected"); }
+				
+				if (node.Breadcrumb) { cssClasses.Add("breadcrumb"); }
+				
+				if(node.Breadcrumb && !node.Selected) { cssClasses.Add("parent-selected"); }
 
 				var classString = new HtmlString((cssClasses.Count == 0) ? "" :
 
@@ -41,7 +45,7 @@ var root = Model.Source.root;
 
 					@if (node.Enabled) {
 
-						<a href="@node.Url" target="@node.Target">@node.Text</a>
+						<a @classString href="@node.Url" target="@node.Target">@node.Text</a>
 
 					} else {
 
