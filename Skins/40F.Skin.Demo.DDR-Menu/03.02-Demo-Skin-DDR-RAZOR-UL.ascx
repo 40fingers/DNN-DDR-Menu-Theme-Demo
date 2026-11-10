@@ -10,7 +10,7 @@
 		
 	<!-- START -->
 
-	<dnn:MENU MenuStyle="[SKIN]Menus/03.02-DDR-RAZOR-CS-UL" runat="server"></dnn:MENU>
+	<dnn:MENU MenuStyle="[SKIN]Menus/03.02-DDR-RAZOR-CS-UL-Full" runat="server"></dnn:MENU>
 
 <!-- END -->
 		

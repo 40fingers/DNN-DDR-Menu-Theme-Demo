@@ -1,0 +1,221 @@
+/* =========================================================
+   40FINGERS DDR Mega Menu (30.02)
+   Markup from Menus/30.02-Demo-Skin-DDR-MegaMenu/Template.cshtml:
+
+   ul.menu-root.level-0                  top menu bar
+     li.level-0                          top item
+       div.item-wrapper.level-0          wrapper (same classes as the li)
+         a.item-link / span.item-link    link, or span for disabled pages
+           img.item-icon / img.item-icon-large
+           span.item-text
+       ul.level-1                        mega menu panel
+         li.level-1                      column
+           ul.level-2                    links in a column
+   ========================================================= */
+
+
+/* Menu container: all rules below only apply inside the mega menu */
+.fortyfingers-megamenu {
+
+    /* ---------------------------------------------------------
+       Settings: change these to restyle the menu
+       --------------------------------------------------------- */
+
+    /* General */
+    --mm-border-width: 1px;
+    --mm-duration: 0.2s;              /* panel fade / slide time */
+    --mm-easing: ease;
+
+    /* Top menu bar */
+    --mm-top-padding: 0.7em 1em;
+    --mm-top-spacing: 0.5em;          /* space between top items */
+    --mm-top-border-color: #ddd;
+    --mm-top-active-bg: #eee;         /* hover, selected and parent-selected */
+    --mm-top-active-color: #000;
+
+    /* Panel */
+    --mm-panel-bg: #eee;
+    --mm-panel-padding: 1em;
+    --mm-panel-columns: 5;
+    --mm-panel-gap: 2em;
+    --mm-panel-offset: -0.5em;        /* start position of the slide-down */
+
+    /* Items in the panel */
+    --mm-item-padding: 0.5em 0.8em;
+    --mm-indent: 1em;                 /* extra indent per deeper level */
+    --mm-icon-size: 20px;
+    --mm-heading-weight: bold;        /* column headings (level 1) */
+    --mm-heading-border-color: #bbb;
+
+    /* Cards (items with a large image) */
+    --mm-image-ratio: 3/2;
+    --mm-card-bg: #fff;
+    --mm-card-border-color: #ddd;
+    --mm-card-spacing: 0.5em;         /* space below each card */
+    --mm-card-text-bg: #888;
+    --mm-card-text-color: #fff;
+    --mm-card-text-padding: 0.5em;
+
+    /* --------------------------------------------------------- */
+
+
+    /* Positioning context for the panels (left: 0 = left edge of the menu) */
+    position: relative;
+
+    /* Reset list styling for all levels */
+    ul,
+    li {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Top menu bar: items next to each other, wrapping when there's no room */
+    ul.level-0 {
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+
+
+    }
+
+    /* Top level item */
+    li.level-0 {
+
+        /* Top level links */
+        .item-wrapper.level-0 {
+            display: inline-block;
+            padding: var(--mm-top-padding);
+
+            &:hover, &.selected, &.parent-selected{
+                background: var(--mm-top-active-bg);
+                a{
+                     color : var(--mm-top-active-color);
+                }
+
+            }
+
+            &:hover{
+                border-color: transparent;
+            }
+
+
+        }
+
+
+
+        /* Show the panel when hovering the top level item (fade in + slide down) */
+        &:hover {
+            ul.level-1 {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+                /* show immediately, no visibility delay */
+                transition-delay: 0s;
+            }
+
+        }
+
+        .item-wrapper {
+
+
+            &.level-0 {
+                border: solid var(--mm-border-width) var(--mm-top-border-color);
+                margin-right: var(--mm-top-spacing);
+            }
+        }
+
+        /* Mega menu panel: hidden by default, full width below the bar, columns set by --mm-panel-columns */
+        ul.level-1 {
+            display: grid;
+            padding: var(--mm-panel-padding);
+            width: 100%;
+
+            background: var(--mm-panel-bg);
+            position: absolute;
+            left: 0;
+            grid-template-columns: repeat(var(--mm-panel-columns), 1fr);
+            gap: var(--mm-panel-gap);
+
+            /* Hidden state for the animation (display: none can't be animated).
+               visibility: hidden keeps the hidden panel from catching hover and clicks */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(var(--mm-panel-offset));
+            /* fade out first, then hide (visibility waits for the fade) */
+            transition: opacity var(--mm-duration) var(--mm-easing), transform var(--mm-duration) var(--mm-easing), visibility 0s linear var(--mm-duration);
+
+            /* No animation for users who prefer reduced motion */
+            @media (prefers-reduced-motion: reduce) {
+                transition: none;
+                transform: none;
+            }
+
+            /* Every deeper level inside a column is indented more */
+            ul {
+                padding-left: var(--mm-indent);
+            }
+
+            /* All items in the panel */
+            .item-wrapper {
+
+                padding: var(--mm-item-padding);
+
+                /* Icons */
+                .item-icon {
+                    max-width: var(--mm-icon-size);
+                }
+
+                /* Wrapper around the large image (overflow: hidden keeps e.g. a hover zoom inside) */
+                .item-image {
+                    display: block;
+                    overflow: hidden;
+                    aspect-ratio: var(--mm-image-ratio);
+                }
+
+                /* Large image on its own line, above the text */
+                .item-icon-large {
+                    display: block;
+                    margin: 0;
+                    border: 0;
+                    width: 100%;
+                    height: 100% !important;
+                    /* overrule theme */
+                    object-fit: cover;
+                    object-position: center center;
+                }
+
+                /* Items with a large image: hide the small icon and show the item as a card */
+                &:has(.item-icon-large) {
+                    padding: 0;
+
+                    .item-icon {
+                        display: none;
+                    }
+
+                    border: solid var(--mm-border-width) var(--mm-card-border-color);
+                    margin-bottom: var(--mm-card-spacing);
+                    background: var(--mm-card-bg);
+
+                    .item-text {
+                        display: block;
+                        background: var(--mm-card-text-bg);
+                        color: var(--mm-card-text-color);
+                        padding: var(--mm-card-text-padding);
+                    }
+
+                }
+
+            }
+
+            /* Column headings (level 1 items) */
+            .item-wrapper.level-1 {
+                font-weight: var(--mm-heading-weight);
+                border-bottom: solid var(--mm-border-width) var(--mm-heading-border-color);
+
+            }
+
+
+        }
+    }
+}
