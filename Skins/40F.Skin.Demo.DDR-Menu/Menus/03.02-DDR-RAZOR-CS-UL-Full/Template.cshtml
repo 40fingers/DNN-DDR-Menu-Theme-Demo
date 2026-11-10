@@ -1,0 +1,96 @@
+@using DotNetNuke.Web.DDRMenu;
+@using DotNetNuke.Entities.Portals;
+
+@using System.Dynamic;
+
+@inherits DotNetNuke.Web.Razor.DotNetNukeWebPage<dynamic>
+
+@{
+
+var root = Model.Source.root;
+
+}
+
+<h1>@PortalSettings.Current.ActiveTab.TabName</h1>
+
+@helper RenderNodes(IList<MenuNode> nodes, int level) {
+
+	if (nodes.Count > 0) {
+
+		// Every ul gets the level of its items: level-0, level-1, ...; the root also gets "menu-root"
+		var ulClass = new HtmlString(" class=\"" + ((level == 0) ? "menu-root " : "") + "level-" + level + "\"");
+
+		<ul @ulClass>
+
+			@foreach (var node in nodes) {
+
+				var hasIcon = !String.IsNullOrEmpty(node.Icon);
+				var hasLargeImage = !String.IsNullOrEmpty(node.LargeImage);
+
+				var cssClasses = new List<string>();
+
+				if (node.First) { cssClasses.Add("first"); }
+
+				if (node.Last) { cssClasses.Add("last"); }
+
+				if (node.Selected) { cssClasses.Add("selected"); }
+
+				if (node.Breadcrumb) { cssClasses.Add("breadcrumb"); }
+
+				if (node.Breadcrumb && !node.Selected) { cssClasses.Add("parent-selected"); }
+
+				// Level of the item in the rendered menu: level-0, level-1, ...
+				cssClasses.Add("level-" + level);
+
+				if (node.Children.Count > 0) { cssClasses.Add("has-children"); } else { cssClasses.Add("no-children"); }
+
+				var classString = new HtmlString(" class=\"" + String.Join(" ", cssClasses.ToArray()) + "\"");
+
+				// The item-wrapper gets the li classes too, plus "no-icon" when the page has no icon or large image
+				var wrapperClasses = new List<string>(cssClasses);
+				wrapperClasses.Insert(0, "item-wrapper");
+				if (!hasIcon && !hasLargeImage) { wrapperClasses.Add("no-icon"); }
+				var wrapperClassString = new HtmlString(" class=\"" + String.Join(" ", wrapperClasses.ToArray()) + "\"");
+
+				// Id: l{level}_{Page-Name}, like the XSLT example (02.04)
+				var id = "l" + level + "_" + node.Text.Replace(" ", "-");
+
+				<li @classString id="@id">
+
+					<div @wrapperClassString>
+
+						@if (node.Enabled) {
+
+							<a class="item-link" href="@node.Url" target="@node.Target">@RenderContent(node, hasIcon, hasLargeImage)</a>
+
+						} else {
+
+							<span class="item-link">@RenderContent(node, hasIcon, hasLargeImage)</span>
+
+						}
+
+					</div>
+
+					@RenderNodes(node.Children, level + 1)
+
+				</li>
+
+			}
+
+		</ul>
+
+	}
+
+}
+
+@helper RenderContent(MenuNode node, bool hasIcon, bool hasLargeImage) {
+
+	if (hasIcon) { <img class="item-icon" src="@node.Icon" title="@node.Title" /> }
+
+	if (hasLargeImage) { <span class="item-image"><img class="item-icon-large" src="@node.LargeImage" title="@node.Title" /></span> }
+
+	<span class="item-text">@node.Text</span>
+
+}
+
+@RenderNodes(root.Children, 0)
